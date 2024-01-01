@@ -34,6 +34,10 @@ body {
 ol, ul {
 	list-style: none;
 }
+a{
+	text-decoration: none;
+	color: black;
+}
 blockquote, q {
 	quotes: none;
 }
@@ -123,8 +127,61 @@ li:hover {
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	margin: 1em 0;
 }
+
+.titreAdminModif{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 30px;
+}
+
+.titreAdmin i{
+	font-size: 16px;
+}
+
+.modifTxt{
+	font-size: 14px;
+	font-family: Work sans;
+	font-weight: 400;
+	margin-left: 10px;
+}
+
+/* filtres */
+
+.filters {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #1D6154;
+	font-size: 16px;
+	font-weight: 700;
+	gap: 10px;
+	margin: 40px
+}
+
+.active-btn{
+	color: white;
+	background: #1D6154;
+}
+.active-btn:hover{
+	color: white;
+}
+
+.filterButtons{
+	border: 1px solid;
+	padding: 10px 20px;
+	border-radius: 60px;
+	cursor: pointer;
+	font-family: Syne;
+}
+
+.modifBtn{
+	cursor: pointer;
+}
+
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -135,6 +192,8 @@ li:hover {
 
 .gallery img {
 	width: 100%;
+	min-height: 100%;
+	object-fit: cover;
 
 }
 #contact {
@@ -185,4 +244,277 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
+
+/* Log-In Page */
+
+.loginBody{
+	background: #fdffda46;
+}
+
+.loginPage{
+	display: flex;
+	justify-content: center;
+	margin-top: 100px;
+	height: 75vh;
+}
+
+.loginLink {
+	font-weight: bolder;
+	cursor: pointer;
+}
+
+
+
+.logInContainer{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.logTitle{
+	font-size: 30px;
+	font-weight: 700;
+	color: #1D6154;
+	font-family: Syne;
+	margin: 50px;
+}
+
+.infoMsg{
+	font-weight: 700;
+	margin-bottom: 10px;
+	color: red;
+}
+
+.loginForm{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.logInput label{
+	font-size: 14px;
+}
+
+.logInput{
+	margin: 10px 0;
+}
+
+.logInput input{
+	box-sizing: border-box;
+	padding: 0 10px;
+	width: 380px;
+	height: 50px;
+	margin: 10px 0;
+	border: none;
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.1);
+}
+
+.logButton{
+	font-size: 14px;
+	font-weight: 700;
+	font-family: Syne;
+	color: white;
+	border: none;
+	background: #1D6154;
+	border-radius: 60px;
+	padding: 10px 30px;
+	margin: 20px 0;
+}
+
+
+
+
+/* modalTest */
+
+.modal{
+	display: none;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	margin: 0;
+	width: 100vw;
+	height: 100vh;
+	background: #0000008d;
+	animation: fadeIn 0.3s;
+}
+
+.modal-wrapper{
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	box-sizing: border-box;
+	background: rgb(255, 255, 255);
+	width: 638px;
+	height: 688px;
+	padding: 30px 100px;
+	animation: slide 0.3s;
+	border-radius: 10px;
+}
+
+.modalCloseButton{
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	cursor: pointer;
+}
+
+.modalTitle{
+	font-size: 28px;
+	font-weight: 400;
+	text-align: center;
+	margin: 30px;
+	
+}
+
+.modalLine{
+	width: 100%;
+	height: 1px;
+	background: #B3B3B3;
+	margin-top: 50px;
+}
+
+.modalButton{
+	font-weight: 700;
+	font-family: Syne;
+	background: #1D6154;
+	color: white;
+	border: none;
+	display: block;
+	margin: auto;
+	margin-top: 40px;
+	padding: 10px 60px;
+	border-radius: 60px;
+}
+
+.noActiveBtn{
+	background: #717171;
+}
+
+.modalContainerWorks{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.modalBoxImg{
+	position: relative;
+	width: 76px;
+		height: 102px;
+		margin: 15px 5px;
+}
+
+.modalImg {
+	width: 100%;
+	height: 100%;
+}
+
+.modalTrashIcon{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	background: #000000b4;
+	padding: 3px 4px;
+	width: 9px;
+	height: 11px;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+/* modal add photo */
+
+.modalPhotoContainer{
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 420px;
+	height: 170px;
+	background: #e8f1f5;
+	margin: 10px 0 30px 0;
+}
+
+
+
+.modalImageDisplay{
+	position: absolute;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.modalAddPhotoIcon{
+	width: 70px;
+	height: 60px;
+	
+
+}
+
+.modalAddPhotoButton{
+	opacity: 0;
+	position: absolute;
+}
+
+.modalLabelAddPhoto{
+	background: #b9c5cc;
+	text-align: center;
+	font-family: Work sans;
+	font-weight: 500;
+	padding: 10px;
+	border-radius: 60px;
+	border: none;
+	width: 170px;
+	margin: 10px;
+	color: #306685;
+	cursor: pointer;
+}
+
+
+
+.modalTxtFormat{
+	font-size: 10px;
+	font-family: Work sans;
+	color: #444444;
+	margin-top: 5px;
+}
+
+.modalLabel{
+	margin: 5px 0;
+}
+
+.modalInput{
+	padding: 15px;
+	margin-bottom: 15px;
+	border: none;
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+}
+
+
+.modalActiv{
+	display: flex;
+}
+
+@keyframes fadeIn {
+	from{
+		opacity: 0
+	}
+	to{
+		opacity: 1;
+		
+	}
+}
+@keyframes slide {
+	from{
+		transform: translatey(-80px);
+	}
+	to{
+		transform: translatey(0);
+		
+	}
+}
+
+
+
+
 
