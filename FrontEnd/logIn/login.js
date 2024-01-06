@@ -1,19 +1,23 @@
-
+// recuperation elements formulaire
 const loginFormulaire = document.querySelector('.loginForm');
 const mailInput = document.querySelector('#email');
 const passwordInput = document.querySelector('#password');
 const infoMsg = document.querySelector('.infoMsg');
 
+// evenement validation formulaire
 loginFormulaire.addEventListener('submit', handleSubmit);
 
+// creation objet des valeurs input mail et password
 function getFormData() {
-    return { email: mailInput.value, password: passwordInput.value }; // objet valeurs input mail/password
+    return { email: mailInput.value, password: passwordInput.value };
 }
 
+// verification de la validité des inputs
 function validateFormData(formData) {
     return formData.email !== '' && formData.password !== ''; // verification validité
 }
 
+// POST des données 
 async function postLoginData(formData) {
     const response = await fetch("http://localhost:5678/api/users/login", {
         method: "POST",
@@ -21,10 +25,10 @@ async function postLoginData(formData) {
         body: JSON.stringify(formData)
     });
 
-
     return response.json();
 }
 
+// gestion de la reponse: message authentification, localStorage
 function handleResponse(data) {
     if (data.token) {
         infoMsg.textContent = 'Authentification réussie';
@@ -35,6 +39,7 @@ function handleResponse(data) {
         infoMsg.textContent = 'E-mail ou Mot de passe incorrect';
     }
 }
+
 
 async function handleSubmit(event) {
     event.preventDefault();
