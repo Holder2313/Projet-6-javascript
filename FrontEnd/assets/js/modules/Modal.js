@@ -1,8 +1,6 @@
-import { createModalCloseButton, createModalTitle, createModalLine } from "./UI.js";
-import { modalSendNewWork } from "./API.js";
+import { createModalCloseButton, createModalTitle, createModalLine, createModalArrow } from "./UI.js";
+import { modalSendNewWork, getCategoriesModal } from "./API.js";
 import { updateButtonState } from "./Helper.js";
-
-
 
 
 
@@ -22,7 +20,6 @@ export const openModal = (e) => {
 export const closeModal = (e) => {
     e.preventDefault();
     modal.classList.remove('modalActiv');
-    // modal.removeEventListener('click', closeModal);
     document.querySelector('.modal-stop').removeEventListener('click', stopPropagation);
 };
 
@@ -33,7 +30,7 @@ export const stopPropagation = (event) => {
 
 
 // Ajout d'une nouvelle œuvre
-export function modalAddWork() {
+export async function modalAddWork() {
     modalWrapper.innerHTML = '';
 
 
@@ -45,6 +42,10 @@ export function modalAddWork() {
     // Ajout du titre de la modal
     const modalTitle = createModalTitle('Ajout photo');
     modalWrapper.appendChild(modalTitle);
+
+    // Ajout fe la fleche retour
+    const modalArrow = createModalArrow()
+    modalWrapper.appendChild(modalArrow);
 
     // creation/ajout du container photo
     const modalPhotoContainer = createModalPhotoContainer()
@@ -82,9 +83,31 @@ export function modalAddWork() {
     const modalLabelCategory = createModalLabelCategory('Catégories')
     modalWrapper.appendChild(modalLabelCategory)
 
-    // creation/ajout Input Categories
-    const modalInputCategory = createModalInputCategory()
-    modalWrapper.appendChild(modalInputCategory)
+    // Ajout Input Categories
+    const modalInputCategory = document.createElement('select');
+    modalInputCategory.className = 'modalInput';
+    modalInputCategory.id = 'inputCategory';
+    modalInputCategory.addEventListener('change', updateButtonState);
+    modalWrapper.appendChild(modalInputCategory);
+
+    // Ajout d'une option vide par défaut
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = '';
+    modalInputCategory.appendChild(defaultOption);
+
+    // Récupérer les catégories depuis l'API 
+    async function displayInputCategories() {
+        const categories = await getCategoriesModal();
+
+        categories.forEach((category) => {
+            const option = document.createElement('option');
+            option.value = category.id;
+            option.textContent = category.name;
+            modalInputCategory.appendChild(option);
+        });
+    }
+    displayInputCategories();
 
     // ajout d'une ligne de séparation
     const modalLine = createModalLine();
@@ -205,21 +228,6 @@ export function createModalLabelCategory(textLabelCategory) {
     return modalLabelCategory
 }
 
-// Input Categories
-export function createModalInputCategory() {
-
-    const modalInputCategory = document.createElement('select')
-    modalInputCategory.className = 'modalInput'
-    modalInputCategory.id = 'inputCategory'
-    modalInputCategory.innerHTML = `<option value=""></option>
-        <option value=1>Objets</option>
-        <option value=2>Appartements</option>
-        <option value=3>Hôtel & restaurants</option>`
-    modalWrapper.appendChild(modalInputCategory)
-    modalInputCategory.addEventListener('change', updateButtonState)
-
-    return modalInputCategory
-}
 
 // bouton ajouter
 export function createModalValidButton() {

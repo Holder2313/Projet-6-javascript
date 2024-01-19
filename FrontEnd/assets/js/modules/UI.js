@@ -4,37 +4,36 @@ import { modalWrapper } from './Modal.js';
 import { activeButtonFilter } from './Helper.js';
 
 
-// Fonction pour créer des filtres de catégories
-export function createFilters(categories) {
-    const filtersContainer = document.querySelector('.filters');
+// Fonction pour gerer l'affichage selon le statut d'admin/utilisateur
+export function AuthStatus(categories) {
     const logButton = document.querySelector('.loginLink');
-    const titreAdminModif = document.querySelector('.titreAdminModif');
 
-    const allBtn = { name: 'Tous', id: null };
-    categories.unshift(allBtn);
-
-    // Décider de l'affichage selon le statut d'admin de l'utilisateur
     if (!localStorage.getItem('adminToken')) {
-        nonAdminView(categories, logButton, filtersContainer);
+        nonAdminView(categories, logButton);
     } else {
-        adminView(logButton, titreAdminModif);
+        adminView(logButton);
     }
 
     // Charger initialement toutes les œuvres
     getWorks();
 }
-
-
+ 
 
 
 
 // Vue pour les utilisateurs non-administrateurs
-export function nonAdminView(categories, logButton, filtersContainer) {
-    console.log(logButton);
+export function nonAdminView(categories, logButton) {
+    const filtersContainer = document.querySelector('.filters');
 
-    logButton.textContent = 'login'; // bouton de connexion
+    // bouton de connexion
+    logButton.textContent = 'login'; 
     logButton.setAttribute('href', "./logIn/login.html");
 
+    //creation du bouton 'tous'
+    const allBtn = { name: 'Tous', id: null };
+    categories.unshift(allBtn);
+
+    //creation des filtres
     categories.forEach(category => {
         const buttonFilter = document.createElement('li');
         buttonFilter.textContent = category.name;
@@ -57,12 +56,8 @@ export function nonAdminView(categories, logButton, filtersContainer) {
 
 
 // Vue pour les administrateurs
-export function adminView(logButton, titreAdminModif) {
-    console.log(logButton);
-
-    // activation de banniere admin
-    const adminBanner = document.querySelector('.adminBanner')
-    adminBanner.style.display = 'block'
+export function adminView(logButton) {
+    const titreAdminModif = document.querySelector('.titreAdminModif');
 
     // Modif bouton de connexion pour un bouton de déconnexion
     logButton.textContent = 'logout';
@@ -72,16 +67,25 @@ export function adminView(logButton, titreAdminModif) {
     });
 
     // Ajouter un bouton de modification pour ouvrir la modal d'administration
-    const modifButton = document.createElement('i');
-    const modifTxt = document.createElement('span');
-    modifButton.className = 'fa-solid fa-pen-to-square modifBtn';
-    modifTxt.textContent = 'Modifier ';
-    modifTxt.className = 'modifTxt';
 
-    modifButton.appendChild(modifTxt);
-    titreAdminModif.appendChild(modifButton);
+    if (!titreAdminModif.querySelector('.modifBtn')) {
+        const modifButton = document.createElement('i');
+        const modifTxt = document.createElement('span');
+        modifButton.className = 'fa-solid fa-pen-to-square modifBtn';
+        modifTxt.textContent = 'Modifier ';
+        modifTxt.className = 'modifTxt';
 
-    modifButton.addEventListener('click', openModal);
+        modifButton.appendChild(modifTxt);
+        titreAdminModif.appendChild(modifButton);
+
+        modifButton.addEventListener('click', openModal);
+    }
+
+    // activation de banniere admin
+    const adminBanner = document.querySelector('.adminBanner')
+    adminBanner.style.display = 'flex'
+    adminBanner.addEventListener('click', openModal)
+
 
 }
 
@@ -89,14 +93,19 @@ export function adminView(logButton, titreAdminModif) {
 // Fonction pour afficher les œuvres dans la galerie
 export function displayData(arrayOfWorks) {
     const gallery = document.querySelector('.gallery');
-    gallery.innerHTML = ''; // Nettoyer la galerie avant d'afficher de nouvelles œuvres
+    
+    // Nettoyer la galerie avant d'afficher de nouvelles œuvres
+    gallery.innerHTML = ''; 
+
 
     arrayOfWorks.forEach(work => {
-        const figure = document.createElement('figure');
-        figure.className = 'figure'
+        // création des éléments de la gallerie
         const img = document.createElement('img');
         const figcaption = document.createElement('figcaption');
+        const figure = document.createElement('figure');
+        figure.className = 'figure'
 
+        // ajout dynamique de l'image et du texte
         img.src = work.imageUrl;
         figcaption.textContent = work.title;
 
@@ -140,6 +149,7 @@ export function displayModalGallery(arrayOfWorks) {
 
 // Fonctions annexes pour créer éléments de la modal
 
+//bouton fermeture
 export function createModalCloseButton() {
     const modalCloseButton = document.createElement('img');
     modalCloseButton.src = './assets/icons/close-icon.svg';
@@ -148,6 +158,16 @@ export function createModalCloseButton() {
     return modalCloseButton;
 }
 
+//fleche retour
+export function createModalArrow() {
+    const modalArrow = document.createElement('img')
+    modalArrow.src = './assets/icons/arrow-icon.svg';
+    modalArrow.className = 'modalArrow';
+    modalArrow.addEventListener('click', () => getWorks())
+    return modalArrow;
+}
+
+//titre
 export function createModalTitle(titleText) {
     const modalTitle = document.createElement('h3');
     modalTitle.textContent = titleText;
@@ -155,6 +175,7 @@ export function createModalTitle(titleText) {
     return modalTitle;
 }
 
+//image
 export function createModalBoxImg(work) {
     const modalBoxImg = document.createElement('div');
     modalBoxImg.className = 'modalBoxImg';
@@ -172,9 +193,7 @@ export function createModalBoxImg(work) {
     return modalBoxImg;
 }
 
-
-
-
+//corbeille
 export function createModalTrashIcon(workId) {
     const icon = document.createElement('img');
     icon.src = './assets/icons/trash-icon.svg';
@@ -185,6 +204,7 @@ export function createModalTrashIcon(workId) {
     return icon;
 }
 
+//ligne de séparation
 export function createModalLine() {
     const line = document.createElement('div');
     line.className = 'modalLine';
@@ -192,6 +212,7 @@ export function createModalLine() {
     return line;
 }
 
+//bouton ajouter
 export function createModalButton(buttonText) {
     const modalButtonAdd = document.createElement('button');
     modalButtonAdd.textContent = buttonText;

@@ -1,44 +1,49 @@
-import { createFilters, displayModalGallery, displayData } from './UI.js';
+import { AuthStatus, displayModalGallery, displayData } from './UI.js';
 
 
-
-// Fonction principale pour obtenir les catégories et initialiser l'application
-export async function getCategory() {
+// appel API generique methode GET
+export async function fetchGETApi(url) {
     try {
-        const response = await fetch('http://localhost:5678/api/categories');
+        const response = await fetch(url);
         if (!response.ok) {
-            throw new Error(`Erreur http. status: ${response.status}`);
+            throw new Error(`Erreur HTTP. Statut : ${response.status}`);
+
         }
-        const categories = await response.json();
-        createFilters(categories);
-
-
+        return await response.json();
     } catch (error) {
-        console.error('Erreur lors de la récupération des catégories: ', error);
+        console.error('Erreur lors de la récupération des données : ', error);
+
     }
 }
 
+// Fonction principale pour initialiser l'application et obtenir les catégories
+export async function getCategoryInit() {
+    const categories = await fetchGETApi('http://localhost:5678/api/categories');
+    AuthStatus(categories);
 
-// Fonction pour obtenir les œuvres depuis l'API et les afficher
+    return categories
+}
+
+// Fonction pour obtenir les categories dans la modale
+export async function getCategoriesModal() {
+    return await fetchGETApi(('http://localhost:5678/api/categories'))
+}
+
+
+
+// Fonction pour obtenir les travaux depuis l'API et les filtrer/afficher
 export async function getWorks(categoryId) {
-    try {
-        const response = await fetch('http://localhost:5678/api/works');
-        if (!response.ok) {
-            throw new Error(`Erreur http. status: ${response.status}`);
-        }
-        const works = await response.json();
-
+        const works = await fetchGETApi('http://localhost:5678/api/works');
+        
         // Filtrer les œuvres si un categoryId est fourni
         let filteredData = works
         if (categoryId) {
             filteredData = works.filter(obj => obj.categoryId === categoryId)
         }
 
-        displayData(filteredData);
+        displayData(filteredData);//envoi des oeuvres pour la gallerie
         displayModalGallery(filteredData)//envoi des oeuvres pour la modale
-    } catch (error) {
-        console.error('Erreur lors de la récupération des œuvres: ', error);
-    }
+   
 }
 
 // Suppression d'une œuvre

@@ -10,16 +10,17 @@ export function activeButtonFilter(categoryId) {
 
 // verification validité des inputs
 export function updateButtonState() {
-    const fileImg = document.getElementById('imageInput').files[0];
     const titre = document.getElementById('inputTitre').value;
+    const fileImg = document.getElementById('imageInput').files[0];
     const category = document.getElementById('inputCategory').value;
     const modalButton = document.querySelector('.modalButton');
 
-    if (fileImg && titre && category) {
+    if (titre && fileImg && category) {
         modalButton.classList.remove('noActiveBtn');
         modalButton.disabled = false;
     } else {
         modalButton.classList.add('noActiveBtn');
         modalButton.disabled = true;
+        
     }
 }

@@ -34,6 +34,11 @@ body {
 ol, ul {
 	list-style: none;
 }
+figcaption{
+	font-family: Work sans;
+	margin-top: 5px;
+	margin: 5px;
+}
 a{
 	text-decoration: none;
 	color: black;
@@ -74,6 +79,13 @@ section {
 	display: none;
 	height: 60px;
 	background: #000;
+	color: white;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	font-size: 16px;
+	font-weight: 400;
+	cursor: pointer;
 }
 
 h1{
@@ -202,6 +214,7 @@ li:hover {
 
 .figure{
 	height: 500px;
+	margin-bottom: 20px;
 }
 
 .gallery img {
@@ -375,6 +388,14 @@ footer nav ul {
 	cursor: pointer;
 }
 
+.modalArrow{
+	position: absolute;
+	top: 30px;
+	left: 30px;
+	cursor: pointer;
+	width: 20px;
+}
+
 .modalTitle{
 	font-size: 28px;
 	font-weight: 400;
@@ -415,8 +436,8 @@ footer nav ul {
 .modalBoxImg{
 	position: relative;
 	width: 76px;
-		height: 102px;
-		margin: 15px 5px;
+	height: 102px;
+	margin: 15px 5px;
 }
 
 .modalImg {

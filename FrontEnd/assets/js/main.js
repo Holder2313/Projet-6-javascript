@@ -1,25 +1,27 @@
 // Importations des fonctions du module API
 import {
-  getCategory,
+  getCategoryInit,
   getWorks,
   modalSendNewWork,
   modalRemoveWork,
-} from "../modules/API.js";
+  fetchGETApi
+} from "./modules/API.js";
 
 // Importations des fonctions du module UI
 import {
-  createFilters,
+  AuthStatus,
   displayData,
   nonAdminView,
   adminView,
-  displayModalGallery,
+  displayModalGallery, 
   createModalCloseButton,
+  createModalArrow,
   createModalTitle,
   createModalBoxImg,
   createModalTrashIcon,
   createModalLine,
   createModalButton,
-} from "../modules/UI.js";
+} from "./modules/UI.js";
 
 // Importations des fonctions du module Modal
 import {
@@ -36,12 +38,12 @@ import {
   createModalLabelTitre,
   createModalInputTitre,
   createModalLabelCategory,
-  createModalInputCategory,
+  // createModalInputCategory,
   createModalValidButton,
-} from "../modules/Modal.js";
+} from "./modules/Modal.js";
 
 // Importations des fonctions d'aide et de validation
-import { activeButtonFilter, updateButtonState } from "../modules/Helper.js";
+import { activeButtonFilter, updateButtonState } from "./modules/Helper.js";
 
 // initialisation
-getCategory();
+getCategoryInit();
